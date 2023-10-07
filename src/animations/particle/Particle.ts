@@ -1,5 +1,6 @@
 import { Screen } from './Screen'
 import { Vector } from './Vector'
+import { ParticleProps } from './types'
 
 let ID = 0
 
@@ -21,7 +22,7 @@ export class Particle {
   tickCount: number
   gravity: Vector
 
-  constructor(x0: number, y0: number) {
+  constructor({ x0, y0 }: ParticleProps) {
     this.maxSpeed = Infinity
     this.id = ID++
     this.pos = new Vector(x0, y0)

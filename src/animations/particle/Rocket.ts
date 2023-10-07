@@ -23,16 +23,16 @@ export class Rocket extends Particle {
   sparkAmount: number
   initialThrust: Vector
   thrust: Vector
-  explosion: Explosion
-  exploded: boolean
-  fuel: number
-  maxFuel: number
-  isDead: boolean
+  explosion: Explosion | undefined
+  exploded = false
+  fuel = 100
+  maxFuel = 100
+  isDead = false
 
   constructor(props: RocketProps) {
-    super(props.x0, props.y0)
-    this.props = props
+    super({ x0: props.x0, y0: props.y0 })
     const { scene, x1, y1 } = props
+    this.props = props
     this.scene = scene
     this.maxSpeed = 0.5 + Math.random() * 2
     this.sparks = []

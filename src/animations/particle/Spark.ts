@@ -1,25 +1,32 @@
 import { Particle } from './Particle'
 import { Screen, ColorType } from './Screen'
 import { Vector } from './Vector'
+import { SparkProps } from './types'
 
 export class Spark extends Particle {
   shouldSparkle: boolean
-  sparkle: boolean
+  sparkle = true
   goal: Vector
   mass: number
   isDead: boolean
   maxSpeed: number
   col: ColorType
   maxTicks: number
-  ignorePhysics: boolean
-  trails: boolean
+  ignorePhysics = false
+  trails = false
   history: Array<{ x: number; y: number }> = []
 
-  constructor({ x0, y0, ...args }) {
-    super(x0, y0)
+  constructor(props: SparkProps) {
+    super(props)
+
+    const { ignorePhysics, maxSpeed, trails, x1, y1 } = props
+
+    this.ignorePhysics = !!ignorePhysics
+    this.maxSpeed = maxSpeed
+    this.trails = !!trails
 
     this.shouldSparkle = true
-    this.goal = new Vector(args.x1, args.y1)
+    this.goal = new Vector(x1, y1)
     // this.dots = []
     this.mass = 1
     // this.size = Math.random() < 0.95 ? 1 : 2
@@ -51,10 +58,8 @@ export class Spark extends Particle {
     this.vel = dir
 
     this.maxTicks = 150 + Math.random() * 25
-    Object.keys(args).forEach((o) => {
-      this[o] = args[o]
-    })
   }
+
   move = () => {
     if (this.tickCount % 10 === 0) {
       // this.history.push({ x: this.pos.x, y: this.pos.y })

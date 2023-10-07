@@ -17,23 +17,24 @@ export class Scene {
   launchIndex: number
   lastLaunch: number
   textMode: boolean
-  centerText: boolean
-  running: boolean
-  pointSize: number
-  goal: StringDataType
-  lastRender: number
-  fps: number
+  centerText = true
+  running = false
+  pointSize = 10
+  goal: StringDataType | undefined
+  lastRender = 0
+  fps = 0
   lastUpdate = 0
-  ups: number
+  ups = 0
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas
     const ctx = canvas.getContext('2d', { willReadFrequently: true })
-    if (ctx) {
-      this.ctx = ctx
+    if (!ctx) {
+      throw Error('No context for canvas found')
     }
-    this.canvas.height = canvas.height
+    this.ctx = ctx
     this.screen = new Screen(this.ctx)
+    this.canvas.height = canvas.height
     this.rockets = []
     this.tickCount = 0
     this.launchDelay = 100
@@ -48,7 +49,7 @@ export class Scene {
     this.textMode = true
   }
 
-  toggleCenterText = (toggle) => {
+  toggleCenterText = (toggle: boolean) => {
     this.centerText = toggle
   }
 
@@ -104,7 +105,8 @@ export class Scene {
   }
 
   launchText = (index: number) => {
-    if (this.goal.length === 0) {
+    const goal = this.goal
+    if (!goal || goal.length === 0) {
       return
     }
 
@@ -120,16 +122,16 @@ export class Scene {
 
     if (this.centerText) {
       let totalWidth = 0
-      for (let i = 0; i < this.goal.length; i++) {
-        const letter = this.goal.letters[i]
+      for (let i = 0; i < goal.length; i++) {
+        const letter = goal.letters[i]
         totalWidth += letter.width * pointSize + spacing
       }
       xOff = this.canvas.width / 2 - totalWidth / 2
       minX = 0
     }
 
-    for (let i = 0; i < this.goal.length; i++) {
-      const letter = this.goal.letters[i]
+    for (let i = 0; i < goal.length; i++) {
+      const letter = goal.letters[i]
       if (letter.height > rowHeight) {
         rowHeight = letter.height
       }
@@ -184,7 +186,7 @@ export class Scene {
       if (this.textMode) {
         this.launchText(this.launchIndex)
         this.launchIndex++
-        if (this.launchIndex > this.goal.length) {
+        if (this.launchIndex > (this.goal?.length ?? 0)) {
           this.launchIndex = 0
         }
         this.textMode = false
@@ -230,12 +232,12 @@ export class Scene {
 
     const particles = this.rockets.reduce((acc, rocket) => {
       const sparks = rocket.exploded
-        ? rocket.explosion.sparks.reduce(
+        ? rocket.explosion?.sparks.reduce(
             (sum, spark) => sum + 1 + spark.history.length,
             0,
           )
         : rocket.tailLength + 1
-      return acc + sparks
+      return acc + (sparks ?? 0)
     }, 0)
 
     this.ctx.fillText(`Particles: ${particles}`, 10, 80)

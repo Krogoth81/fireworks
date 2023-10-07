@@ -34,9 +34,10 @@ export class Explosion {
     canvas.height = this.radius * 4 * (props.maxSpeed ?? 1)
     const ctx = canvas.getContext('2d', { willReadFrequently: true })
 
-    if (ctx) {
-      this.screen = new Screen(ctx)
+    if (!ctx) {
+      throw new Error('Could not get context from canvas')
     }
+    this.screen = new Screen(ctx)
     this.centerX = this.screen.getWidth() / 2
     this.centerY = this.screen.getHeight() / 2
   }

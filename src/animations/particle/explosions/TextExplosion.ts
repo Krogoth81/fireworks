@@ -3,7 +3,7 @@ import { TextExplosionProps } from '../types'
 import { Explosion } from './Explosion'
 
 export class TextExplosion extends Explosion {
-  sparks: Array<Spark>
+  sparks: Array<Spark> = []
 
   constructor(props: TextExplosionProps) {
     super(props)

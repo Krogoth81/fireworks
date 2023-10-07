@@ -1,6 +1,20 @@
 import { Scene } from '../Scene'
 import { Rocket } from './Rocket'
 
+export interface ParticleProps {
+  x0: number
+  y0: number
+}
+
+export interface SparkProps extends ParticleProps {
+  ignorePhysics?: boolean
+  x1: number
+  y1: number
+  trails?: boolean
+  maxSpeed: number
+  shouldSparkle?: boolean
+}
+
 export interface LetterType {
   points: Array<{
     x: number
