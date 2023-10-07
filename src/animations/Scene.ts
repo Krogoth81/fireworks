@@ -95,7 +95,7 @@ export class Scene {
 
     const rocket = new Rocket({
       scene: this,
-      type: Math.random() > 0.5 ? 'circle' : 'globe',
+      type: Math.random() > 0.5 ? 'circle' : 'galaxy',
       x0: minX + Math.random() * (this.canvas.width - minX * 2),
       y0: this.canvas.height,
       x1: minX + Math.random() * (this.canvas.width - minX * 2),

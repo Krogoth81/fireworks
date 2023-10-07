@@ -30,7 +30,7 @@ export interface StringDataType {
   letters: Array<LetterType>
 }
 
-export type RocketType = 'letter' | 'circle' | 'globe' | 'trailing'
+export type RocketType = 'letter' | 'circle' | 'galaxy' | 'trailing'
 
 export type RocketProps = {
   type: RocketType

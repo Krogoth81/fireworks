@@ -32,7 +32,7 @@ export class Spark extends Particle {
     // this.size = Math.random() < 0.95 ? 1 : 2
     this.isDead = false
     // if (Math.random() < 0.3)
-    this.maxSpeed = 2 * Math.random()
+    // this.maxSpeed = 2 * Math.random()
 
     this.col = {
       r: 50 * Math.random() + 205,

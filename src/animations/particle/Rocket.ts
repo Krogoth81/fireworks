@@ -101,7 +101,7 @@ export class Rocket extends Particle {
         })
         break
       }
-      case 'globe': {
+      case 'galaxy': {
         this.explosion = new GalaxyExplosion({ ...baseProps, trails: false })
         break
       }
